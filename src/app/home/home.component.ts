@@ -27,16 +27,7 @@ export class HomeComponent {
   housingService: HousingService = inject(HousingService);
   filteredLocationList: HousingLocation[] = [];
   
-  housingLocation: HousingLocation = {
-    id: 9999,
-    name: 'Test Home',
-    city: 'Test city',
-    state: 'ST',
-    photo:  "https://picsum.photos/200",
-    availableUnits: 99,
-    wifi: true,
-    laundry: false,
-  };
+ 
   housingLocationList: HousingLocation[] = [
     {
       id: 0,
@@ -139,9 +130,12 @@ export class HomeComponent {
       laundry: true
     }
   ];
+  
   constructor() {
-    this.housingLocationList = this.housingService.getAllHousingLocations();
-    this.filteredLocationList = this.housingLocationList;
+    this.housingService.getAllHousingLocations().then((housingLocationList: HousingLocation[]) => {
+      this.housingLocationList = housingLocationList;
+      this.filteredLocationList = housingLocationList;
+    });
   }
   filterResults(text: string) {
     if (!text) {
