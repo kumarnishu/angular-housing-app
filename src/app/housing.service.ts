@@ -1,54 +1,18 @@
-import { Component,inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { HousingLocationComponent } from '../housing-location/housing-location.component';
-import { HousingLocation } from '../housinglocation';
-import { HousingService } from '../housing.service';
+import { Injectable } from '@angular/core';
+import { HousingLocation } from './housinglocation';
 
-@Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [CommonModule, HousingLocationComponent],
-  template: `
-   <section>
-    <form>
-      <input type="text" placeholder="Filter by city">
-      <button class="primary" type="button">Search</button>
-    </form>
-  </section>
-  <section class="results">
-      <app-housing-location
-      *ngFor="let housingLocation of housingLocationList"
-      [housingLocation]="housingLocation">
-    </app-housing-location>
-  </section>
-  `,
-  styleUrls: ['./home.component.css']
+@Injectable({
+  providedIn: 'root'
 })
-
-
-export class HomeComponent {
-  housingService: HousingService = inject(HousingService);
-  constructor() {
-    this.housingLocationList = this.housingService.getAllHousingLocations();
-  }
-  
-  housingLocation: HousingLocation = {
-    id: 9999,
-    name: 'Test Home',
-    city: 'Test city',
-    state: 'ST',
-    photo:  "https://picsum.photos/200",
-    availableUnits: 99,
-    wifi: true,
-    laundry: false,
-  };
+export class HousingService {
+  constructor() { }
   housingLocationList: HousingLocation[] = [
     {
       id: 0,
       name: 'Acme Fresh Start Housing',
       city: 'Chicago',
       state: 'IL',
-      photo:  "https://picsum.photos/200",
+      photo: "https://picsum.photos/200",
       availableUnits: 4,
       wifi: true,
       laundry: true
@@ -58,7 +22,7 @@ export class HomeComponent {
       name: 'A113 Transitional Housing',
       city: 'Santa Monica',
       state: 'CA',
-      photo:  "https://picsum.photos/200",
+      photo: "https://picsum.photos/200",
       availableUnits: 0,
       wifi: false,
       laundry: true
@@ -68,7 +32,7 @@ export class HomeComponent {
       name: 'Warm Beds Housing Support',
       city: 'Juneau',
       state: 'AK',
-      photo:  "https://picsum.photos/200",
+      photo: "https://picsum.photos/200",
       availableUnits: 1,
       wifi: false,
       laundry: false
@@ -78,7 +42,7 @@ export class HomeComponent {
       name: 'Homesteady Housing',
       city: 'Chicago',
       state: 'IL',
-      photo:  "https://picsum.photos/200",
+      photo: "https://picsum.photos/200",
       availableUnits: 1,
       wifi: true,
       laundry: false
@@ -88,7 +52,7 @@ export class HomeComponent {
       name: 'Happy Homes Group',
       city: 'Gary',
       state: 'IN',
-      photo:  "https://picsum.photos/200",
+      photo: "https://picsum.photos/200",
       availableUnits: 1,
       wifi: true,
       laundry: false
@@ -98,7 +62,7 @@ export class HomeComponent {
       name: 'Hopeful Apartment Group',
       city: 'Oakland',
       state: 'CA',
-      photo:  "https://picsum.photos/200",
+      photo: "https://picsum.photos/200",
       availableUnits: 2,
       wifi: true,
       laundry: true
@@ -108,7 +72,7 @@ export class HomeComponent {
       name: 'Seriously Safe Towns',
       city: 'Oakland',
       state: 'CA',
-      photo:  "https://picsum.photos/200",
+      photo: "https://picsum.photos/200",
       availableUnits: 5,
       wifi: true,
       laundry: true
@@ -118,7 +82,7 @@ export class HomeComponent {
       name: 'Hopeful Housing Solutions',
       city: 'Oakland',
       state: 'CA',
-      photo:  "https://picsum.photos/200",
+      photo: "https://picsum.photos/200",
       availableUnits: 2,
       wifi: true,
       laundry: true
@@ -128,7 +92,7 @@ export class HomeComponent {
       name: 'Seriously Safe Towns',
       city: 'Oakland',
       state: 'CA',
-      photo:  "https://picsum.photos/200",
+      photo: "https://picsum.photos/200",
       availableUnits: 10,
       wifi: false,
       laundry: false
@@ -138,10 +102,21 @@ export class HomeComponent {
       name: 'Capital Safe Towns',
       city: 'Portland',
       state: 'OR',
-      photo:  "https://picsum.photos/200",
+      photo: "https://picsum.photos/200",
       availableUnits: 6,
       wifi: true,
       laundry: true
     }
   ];
+  getAllHousingLocations(): HousingLocation[] {
+    return this.housingLocationList;
+  }
+
+  getHousingLocationById(id: number): HousingLocation | undefined {
+    return this.housingLocationList.find(housingLocation => housingLocation.id === id);
+  }
+  submitApplication(firstName: string, lastName: string, email: string) {
+    console.log(`Homes application received: firstName: ${firstName}, lastName: ${lastName}, email: ${email}.`);
+  }
 }
+
